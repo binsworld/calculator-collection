@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실업급여 계산기</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💼 실업급여 모의계산기</h1>
+            <p class="subtitle">대한민국 고용보험 실업급여 금액을 간편하게 계산해보세요</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('regular')">일반 근로자</button>
+            <button class="tab-button" onclick="switchTab('daily')">일용근로자</button>
+            <button class="tab-button" onclick="switchTab('self')">자영업자</button>
+        </div>
+
+        <!-- 일반 근로자 탭 -->
+        <div id="regular-tab" class="tab-content active">
+            <form id="regular-form" class="calculator-form">
+                <h2>일반 근로자 실업급여 계산</h2>
+
+                <div class="form-section">
+                    <h3>기본 정보</h3>
+                    <div class="form-group">
+                        <label for="regular-birth">생년월일 (6자리)</label>
+                        <input type="text" id="regular-birth" placeholder="예: 900101" maxlength="6" required>
+                        <small>YYMMDD 형식으로 입력하세요</small>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="regular-disabled">
+                            장애인
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>고용보험 가입 기간</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="regular-start">가입 시작일</label>
+                            <input type="date" id="regular-start" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regular-end">가입 종료일</label>
+                            <input type="date" id="regular-end" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>최근 3개월 월급</h3>
+                    <div class="form-group">
+                        <label for="regular-wage1">1개월 전 월급 (원)</label>
+                        <input type="number" id="regular-wage1" placeholder="3000000" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regular-wage2">2개월 전 월급 (원)</label>
+                        <input type="number" id="regular-wage2" placeholder="3000000" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regular-wage3">3개월 전 월급 (원)</label>
+                        <input type="number" id="regular-wage3" placeholder="3000000" min="0" required>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">계산하기</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm('regular')">초기화</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 일용근로자 탭 -->
+        <div id="daily-tab" class="tab-content">
+            <form id="daily-form" class="calculator-form">
+                <h2>일용근로자 실업급여 계산</h2>
+
+                <div class="form-section">
+                    <h3>기본 정보</h3>
+                    <div class="form-group">
+                        <label for="daily-birth">생년월일 (6자리)</label>
+                        <input type="text" id="daily-birth" placeholder="예: 900101" maxlength="6" required>
+                        <small>YYMMDD 형식으로 입력하세요</small>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="daily-disabled">
+                            장애인
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>고용보험 가입 기간</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="daily-years">가입 년수</label>
+                            <input type="number" id="daily-years" placeholder="4" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="daily-months">가입 개월수</label>
+                            <input type="number" id="daily-months" placeholder="0" min="0" max="11" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="daily-lastwork">마지막 근무일</label>
+                        <input type="date" id="daily-lastwork" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>최근 3개월 근무 내역</h3>
+                    <div class="daily-wage-group">
+                        <label>1개월 전</label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="number" id="daily-wage1" placeholder="일급 (원)" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" id="daily-days1" placeholder="근무일수" min="0" max="31" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="daily-wage-group">
+                        <label>2개월 전</label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="number" id="daily-wage2" placeholder="일급 (원)" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" id="daily-days2" placeholder="근무일수" min="0" max="31" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="daily-wage-group">
+                        <label>3개월 전</label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="number" id="daily-wage3" placeholder="일급 (원)" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" id="daily-days3" placeholder="근무일수" min="0" max="31" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">계산하기</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm('daily')">초기화</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 자영업자 탭 -->
+        <div id="self-tab" class="tab-content">
+            <form id="self-form" class="calculator-form">
+                <h2>자영업자 실업급여 계산</h2>
+
+                <div class="form-section">
+                    <h3>고용보험 가입 기간</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="self-start">가입 시작일</label>
+                            <input type="date" id="self-start" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="self-end">가입 종료일</label>
+                            <input type="date" id="self-end" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>기준보수 등급</h3>
+                    <div class="form-group">
+                        <label for="self-grade">등급 선택 (1-7등급)</label>
+                        <select id="self-grade" required>
+                            <option value="">선택하세요</option>
+                            <option value="1">1등급 (월 100만원)</option>
+                            <option value="2">2등급 (월 150만원)</option>
+                            <option value="3">3등급 (월 200만원)</option>
+                            <option value="4">4등급 (월 250만원)</option>
+                            <option value="5">5등급 (월 300만원)</option>
+                            <option value="6">6등급 (월 350만원)</option>
+                            <option value="7">7등급 (월 400만원)</option>
+                        </select>
+                        <small>등급이 높을수록 기준보수가 높습니다</small>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">계산하기</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm('self')">초기화</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 결과 표시 영역 -->
+        <div id="result-area" class="result-area" style="display: none;">
+            <h2>계산 결과</h2>
+            <div id="result-content" class="result-content"></div>
+            <div class="result-disclaimer">
+                <p>⚠️ 이 계산 결과는 참고용 모의계산입니다.</p>
+                <p>실제 수급액은 고용센터의 정확한 심사를 통해 결정됩니다.</p>
+                <p>정확한 정보는 <a href="https://www.ei.go.kr" target="_blank">고용보험 홈페이지</a>에서 확인하세요.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 실업급여 계산기 | 참고: <a href="https://eiac.ei.go.kr" target="_blank">고용보험 모의계산</a></p>
+        </footer>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>
