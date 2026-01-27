@@ -4,18 +4,24 @@
 
 ## 🚀 빠른 시작
 
-### 웹 버전 (권장)
+### 🌐 온라인 버전 (가장 간단!)
 
-**브라우저에서 바로 사용! 설치 불필요**
+**인터넷 브라우저에서 바로 사용하세요:**
+
+👉 **https://binsworld.github.io/calculator-collection/**
+
+### 웹 버전 (로컬 실행)
+
+**설치 불필요, 브라우저에서 바로 사용**
 
 ```bash
 # 간단한 HTTP 서버로 실행
-cd web
+cd docs
 python3 -m http.server 8000
 open http://localhost:8000
 
 # 또는 파일로 직접 열기
-open web/index.html
+open docs/index.html
 ```
 
 ### CLI 버전 (Mojo)
@@ -57,8 +63,9 @@ mojo src/unemployment_calculator/main.mojo
 ### 🌐 웹 버전 (추천)
 - **장점**: 설치 불필요, 어디서나 접속 가능, 모바일 지원
 - **용도**: 일반 사용자, 빠른 계산
-- **위치**: `web/` 디렉토리
-- **상세 가이드**: [web/README.md](web/README.md)
+- **온라인**: https://binsworld.github.io/calculator-collection/
+- **위치**: `docs/` 디렉토리
+- **상세 가이드**: [docs/README.md](docs/README.md)
 
 ### 💻 CLI 버전 (Mojo)
 - **장점**: 오프라인 사용, 프로그래밍 학습
