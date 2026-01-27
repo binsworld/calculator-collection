@@ -1,5 +1,185 @@
 # 프로젝트 개발 히스토리
 
+## 2026-01-27 (저녁): GitHub 배포 및 GitHub Pages 설정
+
+### GitHub 저장소 생성
+
+#### Git 커밋 생성
+```bash
+git add .
+git commit -m "Initial commit: Add unemployment benefit calculator (Web + CLI)"
+```
+
+**커밋 내용:**
+- 웹 버전 (HTML/CSS/JavaScript)
+- CLI 버전 (Mojo)
+- 3가지 근로자 유형 지원
+- 2019년 이후 한국 실업급여 규정 기반
+
+#### GitHub CLI로 저장소 생성
+```bash
+gh repo create calculator-collection \
+  --public \
+  --source=. \
+  --remote=origin \
+  --description "대한민국 실업급여 계산기 (웹/CLI)" \
+  --push
+```
+
+**결과:**
+- 저장소 URL: https://github.com/binsworld/calculator-collection
+- 계정: binsworld
+- 공개 저장소 (Public)
+- 초기 커밋 자동 푸시
+
+### GitHub Pages 배포
+
+#### 문제 및 해결
+**문제:** GitHub Pages는 `/web` 폴더를 지원하지 않음
+- 지원 폴더: `/` (루트) 또는 `/docs`만 가능
+
+**해결:**
+```bash
+# 폴더명 변경
+mv web docs
+
+# 커밋 및 푸시
+git add -A
+git commit -m "Rename web to docs for GitHub Pages deployment"
+git push origin master
+```
+
+#### GitHub Pages 활성화
+```bash
+# JSON 설정 파일 생성
+{
+  "build_type": "legacy",
+  "source": {
+    "branch": "master",
+    "path": "/docs"
+  }
+}
+
+# GitHub API로 Pages 활성화
+gh api repos/binsworld/calculator-collection/pages \
+  --method POST \
+  -H "Accept: application/vnd.github+json" \
+  --input pages-config.json
+```
+
+**배포 결과:**
+- 웹사이트 URL: https://binsworld.github.io/calculator-collection/
+- 브랜치: master
+- 폴더: /docs
+- 빌드 타입: legacy
+- HTTPS 강제: true
+- 배포 시간: 약 1-2분
+
+#### README 업데이트
+```bash
+# GitHub Pages URL 추가
+# 폴더 참조 web/ → docs/ 변경
+git add README.md
+git commit -m "Update README: Add GitHub Pages URL and fix folder references"
+git push origin master
+```
+
+### 최종 프로젝트 구조
+
+```
+calculator-collection/
+├── docs/                       # 웹 버전 (GitHub Pages 배포)
+│   ├── index.html             # UI 구조
+│   ├── styles.css             # 반응형 디자인
+│   ├── calculator.js          # 계산 로직
+│   └── README.md              # 웹 버전 가이드
+├── src/                       # Mojo CLI 버전
+│   └── unemployment_calculator/
+│       ├── types.mojo
+│       ├── utils.mojo
+│       ├── calculator.mojo
+│       └── main.mojo
+├── .moai/                     # MoAI 설정
+├── .claude/                   # Claude 설정
+├── README.md                  # 프로젝트 README
+├── HISTORY.md                 # 이 파일
+└── .gitignore
+```
+
+### 접근 방법
+
+#### 1. 온라인 (가장 간단)
+👉 https://binsworld.github.io/calculator-collection/
+- 설치 불필요
+- 모든 브라우저 지원
+- 모바일/태블릿/데스크톱
+
+#### 2. 로컬 웹 (오프라인)
+```bash
+cd docs
+python3 -m http.server 8000
+open http://localhost:8000
+```
+
+#### 3. CLI (Mojo)
+```bash
+mojo src/unemployment_calculator/main.mojo
+```
+
+### GitHub 저장소 구성
+
+**브랜치:**
+- `master`: 메인 브랜치 (GitHub Pages 소스)
+
+**커밋 히스토리:**
+1. `b8b4f5f` - Initial commit: Add unemployment benefit calculator
+2. `95ee25b` - Rename web to docs for GitHub Pages deployment
+3. `9d53371` - Update README: Add GitHub Pages URL
+
+**GitHub Pages 설정:**
+- Source: Deploy from branch
+- Branch: master
+- Path: /docs
+- Custom domain: 없음
+- HTTPS: 강제 활성화
+
+### 배포 확인 방법
+
+#### GitHub 웹사이트
+1. https://github.com/binsworld/calculator-collection
+2. **Actions** 탭 클릭
+3. "pages build and deployment" 확인
+4. 초록색 체크 → 배포 완료
+
+#### GitHub CLI
+```bash
+# 빌드 상태 확인
+gh api repos/binsworld/calculator-collection/pages/builds/latest
+
+# status: "built" 확인
+```
+
+### 공유 및 활용
+
+**공유 링크:**
+```
+https://binsworld.github.io/calculator-collection/
+```
+
+**지원 플랫폼:**
+- 💻 데스크톱 (Windows, macOS, Linux)
+- 📱 모바일 (iOS, Android)
+- 🖥️ 태블릿 (iPad, Android 태블릿)
+- 모든 최신 브라우저 (Chrome, Safari, Firefox, Edge)
+
+**활용 방안:**
+- 개인 실업급여 계산
+- 취업 준비생 정보 제공
+- HR 팀 참고 자료
+- 포트폴리오 프로젝트
+
+---
+
 ## 2026-01-27 (오후): 웹 버전 추가 구현
 
 ### 배경
