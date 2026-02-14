@@ -7,6 +7,20 @@
 # ============================================
 
 # ===========================================
+# Go Build Artifacts
+# ===========================================
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+cover.out
+cover.html
+cpu.prof
+mem.prof
+
+# ===========================================
 # Build Artifacts & Distribution
 # ===========================================
 build/
@@ -29,15 +43,6 @@ __pycache__/
 *.sqlite3
 *.rdb
 *.dbm
-
-# ===========================================
-# Mojo
-# ===========================================
-*.mojo~
-.mojo_cache/
-*.so
-*.dylib
-*.dll
 
 # ===========================================
 # Virtual Environments
@@ -109,7 +114,6 @@ logs/
 # Backups
 # ===========================================
 .moai-backups/
-.moai/cache/
 *.backup/
 *-backup/
 *_backup_*/
@@ -166,6 +170,8 @@ secret-*.*
 .claude/skills/*/*/*secret*
 .claude/skills/*/*/*key*
 .claude/skills/*/*/*token*
+# Re-include legitimate skill module files containing "token" in their name
+!.claude/skills/*/modules/*token*.md
 
 # ===========================================
 # Node.js (for docs/Nextra)
